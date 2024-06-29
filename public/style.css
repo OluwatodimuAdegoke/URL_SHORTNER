@@ -1,0 +1,14 @@
+table, th, td {
+    border: 1px solid white;
+    border-collapse: collapse;
+  }
+  th, td {
+    background-color: #96D4D4;
+  }
+  table {
+    display: flex; flex-direction: column; align-items: center;
+  }
+body {
+    display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh;
+    background-color: white;
+}

@@ -4,44 +4,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>URL Shortener</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </head>
-<body style="background-color: white; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh;">
-    <div style="background-color: gray; border-radius: 10px; padding: 10px; max-width: 80%; width: 100%;">
-        <h1 style="text-align: center; font-weight: bold;">URL Shortener</h1>
-        <form action="/shortUrls" method="post" style="display: flex; flex-direction: row; justify-content: center; margin-bottom: 20px;">
-            <label for="fullUrl" class="sr-only">Full Url</label>
-            <input required type="url" name="fullUrl" id="fullUrl" placeholder="Full Url" style="display: flex; margin-right: 10px; border-radius: 5px; box-shadow: none; border-width: 0px;">
-            <button class="btn btn-success" type="submit">Shorten</button>
-        </form>
-        <div>
-        <table  style="display: flex; flex-direction: column; align-items: center;">
-            <thead>
-                <tr>
-                    <th>Original URL</th>
-                    <th>Shortened URL</th>
-                    <th>Clicks</th>
-                    <th></th>
-                </tr>
-            </thead>
-          
-            <tbody>
-           
-        <% shortUrls.forEach(shortUrl => { %>
-          <tr>
-            <td><a href="<%= shortUrl.full %>"><%= shortUrl.full %></a></td>
-            <td><a href="<%= shortUrl.short %>"><%= shortUrl.short %></a></td>
-            <td><%= shortUrl.clicks %></td>
-            <td>
-                <form action="/<%= shortUrl.short%>" method="post">
-                    <button class="btn btn-danger">Del</button>
+<body class="bg-dark container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 card shadow">
+            <div class="card-body">
+                <h1 class="text-center fw-bold mb-4">URL Shortener</h1>
+                <form action="/shortUrls" method="post" class="mb-4">
+                    <div class="input-group">
+                        <input required type="url" name="fullUrl" id="fullUrl" placeholder="Full URL" class="form-control">
+                        <button class="btn btn-success" type="submit">Shorten</button>
+                    </div>
                 </form>
-            </td>
-          </tr>
-        <% }) %>
-
-            </tbody>
-        </table>
+                <table class="table table-responsive table-striped table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Original URL</th>
+                            <th>Shortened URL</th>
+                            <th>Clicks</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <% shortUrls.forEach(shortUrl => { %>
+                        <tr>
+                            <td><a href="<%= shortUrl.full %>" class="text-break text-reset text-decoration-none"><%= shortUrl.full %></a></td>
+                            <td><a href="<%= shortUrl.short %>" class="text-reset text-decoration-none"><%= shortUrl.short %></a></td>
+                            <td><%= shortUrl.clicks %></td>
+                            <td>
+                                <form action="/<%= shortUrl.short%>" method="post">
+                                    <button class="btn btn-danger btn-sm" title="Delete">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    <% }) %>
+                    </tbody>
+                </table>
+            </div>
+            <h6 class="text-end">By Oluwatodimu Adegoke</h6>
+         
+        </div>
+ 
     </div>
 </body>
 </html>
