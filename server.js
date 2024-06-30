@@ -24,7 +24,8 @@ app.use(express.json());
 app.use(
   cors({
     credentials: true,
-    origin: "http://localhost:4000",
+    origin:
+      "http://localhost:4000" || "https://url-shortener-frontend.vercel.app",
   })
 );
 app.use(express.urlencoded({ extended: false }));
@@ -170,6 +171,10 @@ app.post("/:shortUrl", async (req, res) => {
     console.log(err);
     res.redirect("/");
   }
+});
+
+app.get("*", (req, res) => {
+  res.status(404).send("404 Not Found");
 });
 
 app.listen(process.env.PORT || 4000);
