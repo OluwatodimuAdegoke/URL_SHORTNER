@@ -13,10 +13,7 @@ const app = express();
 const mongoUri = process.env.MONGO_URI;
 const tokenSecret = process.env.TOKEN_SECRET;
 
-mongoose.connect(mongoUri, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect(mongoUri);
 
 app.set("view engine", "ejs");
 app.use(express.static("public"));
