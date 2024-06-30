@@ -1,11 +1,11 @@
 const express = require("express");
-const mongoose = require("mongoose");
-const cors = require("cors");
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
-const cookieParser = require("cookie-parser");
-const ShortUrl = require("./models/shortUrl");
-const User = require("./models/users");
+// const mongoose = require("mongoose");
+// const cors = require("cors");
+// const jwt = require("jsonwebtoken");
+// const bcrypt = require("bcryptjs");
+// const cookieParser = require("cookie-parser");
+// const ShortUrl = require("./models/shortUrl");
+// const User = require("./models/users");
 require("dotenv").config();
 const app = express();
 
