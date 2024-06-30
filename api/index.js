@@ -16,7 +16,6 @@ const tokenSecret = process.env.TOKEN_SECRET;
 
 mongoose.connect(mongoUri);
 
-app.set("views", path.join(__dirname, "../views"));
 app.set("view engine", "ejs");
 
 app.use(express.static("public"));
