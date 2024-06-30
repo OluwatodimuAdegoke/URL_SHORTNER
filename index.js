@@ -21,16 +21,16 @@ mongoose.connect(mongoUri, {
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(cookieParser());
-// app.use(express.json());
+app.use(express.json());
 app.use(
   cors({
     credentials: true,
     origin: process.env.ALLOWED_ORIGIN || "http://localhost:4000", // Fallback to localhost for development
   })
 );
-// app.use(express.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: true }));
 //Render the index.ejs file
 app.get("/", async (req, res) => {
   try {
