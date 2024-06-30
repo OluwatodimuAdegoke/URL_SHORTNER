@@ -6,8 +6,8 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
-const ShortUrl = require("../models/shortUrl");
-const User = require("../models/users");
+const ShortUrl = require("./models/shortUrl");
+const User = require("./models/users");
 require("dotenv").config();
 const app = express();
 
