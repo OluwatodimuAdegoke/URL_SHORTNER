@@ -52,11 +52,12 @@ app.get("/", async (req, res) => {
       res.redirect("/login");
     } else {
       console.log(err);
+      res.redirect("/login");
     }
   }
 });
 
-//User Routes
+//Register Routes
 app.get("/register", (req, res) => {
   res.render("register", { error: req.query.error ? req.query.error : "" });
 });
@@ -93,6 +94,7 @@ app.get("/logout", (req, res) => {
   res.redirect("/login");
 });
 
+// Login Routes
 app.get("/login", (req, res) => {
   res.render("login", { error: req.query.error ? req.query.error : "" });
 });
@@ -128,32 +130,46 @@ app.post("/login", async (req, res) => {
 
 //Create a new short URL
 app.post("/shortUrls", async (req, res) => {
-  const cookie = req.cookies["jwt"];
-  await ShortUrl.create({
-    full: req.body.fullUrl,
-    user: jwt.verify(cookie, tokenSecret)._id,
-  });
-  res.redirect("/");
+  try {
+    const cookie = req.cookies["jwt"];
+    await ShortUrl.create({
+      full: req.body.fullUrl,
+      user: jwt.verify(cookie, tokenSecret)._id,
+    });
+    res.redirect("/");
+  } catch (err) {
+    console.log(err);
+    res.redirect("/");
+  }
 });
 
 //Redirect to the original URL
 app.get("/:shortUrl", async (req, res) => {
-  const shortUrl = await ShortUrl.findOne({ short: req.params.shortUrl });
-  if (shortUrl == null) return res.sendStatus(404);
-  shortUrl.clicks++;
-  shortUrl.save();
-
-  res.redirect(shortUrl.full);
+  try {
+    const shortUrl = await ShortUrl.findOne({ short: req.params.shortUrl });
+    if (shortUrl == null) return res.sendStatus(404);
+    shortUrl.clicks++;
+    shortUrl.save();
+    res.redirect(shortUrl.full);
+  } catch (err) {
+    console.log(err);
+    res.redirect("/");
+  }
 });
 
 //Delete the short URL
 app.post("/:shortUrl", async (req, res) => {
-  const cookie = req.cookies["jwt"];
-  await ShortUrl.findOneAndDelete({
-    short: req.params.shortUrl,
-    user: jwt.verify(cookie, tokenSecret)._id,
-  });
-  res.redirect("/");
+  try {
+    const cookie = req.cookies["jwt"];
+    await ShortUrl.findOneAndDelete({
+      short: req.params.shortUrl,
+      user: jwt.verify(cookie, tokenSecret)._id,
+    });
+    res.redirect("/");
+  } catch (err) {
+    console.log(err);
+    res.redirect("/");
+  }
 });
 
 app.listen(process.env.PORT || 4000);
