@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
@@ -15,19 +16,20 @@ const tokenSecret = process.env.TOKEN_SECRET;
 
 mongoose.connect(mongoUri);
 
+app.set("views", path.join(__dirname, "../views"));
 app.set("view engine", "ejs");
+
 app.use(express.static("public"));
 app.use(cookieParser());
 app.use(express.json());
 app.use(
   cors({
     credentials: true,
-    origin: process.env.ALLOWED_ORIGIN || "http://localhost:4000", // Fallback to localhost for development
+    origin: process.env.ALLOWED_ORIGIN || "http://localhost:3000", // Fallback to localhost for development
   })
 );
 app.use(express.urlencoded({ extended: false }));
-// app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({ extended: true }));
+
 //Render the index.ejs file
 app.get("/", async (req, res) => {
   try {
@@ -58,7 +60,9 @@ app.get("/", async (req, res) => {
 
 //Register Routes
 app.get("/register", (req, res) => {
-  res.render("register", { error: req.query.error ? req.query.error : "" });
+  res.render("register", {
+    error: req.query.error ? req.query.error : "",
+  });
 });
 app.post("/register", async (req, res) => {
   try {
@@ -175,4 +179,4 @@ app.get("*", (req, res) => {
   res.status(404).send("404 Not Found");
 });
 
-app.listen(4000, () => console.log("Server started on port 3000."));
+app.listen(3000, () => console.log("Server started on port 3000."));
