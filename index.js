@@ -4,6 +4,7 @@ const cors = require("cors");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const cookieParser = require("cookie-parser");
+const bodyParser = require("body-parser");
 const ShortUrl = require("./models/shortUrl");
 const User = require("./models/users");
 require("dotenv").config();
@@ -20,15 +21,16 @@ mongoose.connect(mongoUri, {
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(cookieParser());
-app.use(express.json());
+// app.use(express.json());
 app.use(
   cors({
     credentials: true,
     origin: process.env.ALLOWED_ORIGIN || "http://localhost:4000", // Fallback to localhost for development
   })
 );
-app.use(express.urlencoded({ extended: false }));
-
+// app.use(express.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 //Render the index.ejs file
 app.get("/", async (req, res) => {
   try {
