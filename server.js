@@ -24,8 +24,7 @@ app.use(express.json());
 app.use(
   cors({
     credentials: true,
-    origin:
-      "http://localhost:4000" || "https://url-shortener-frontend.vercel.app",
+    origin: process.env.ALLOWED_ORIGIN || "http://localhost:4000", // Fallback to localhost for development
   })
 );
 app.use(express.urlencoded({ extended: false }));
