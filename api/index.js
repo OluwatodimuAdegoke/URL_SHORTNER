@@ -5,13 +5,13 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
-const ShortUrl = require("./models/shortUrl");
-const User = require("./models/users");
+const ShortUrl = require("../models/shortUrl");
+const User = require("../models/users");
 require("dotenv").config();
 const app = express();
 
-mongoUri = process.env.MONGO_URI;
-tokenSecret = process.env.TOKEN_SECRET;
+const mongoUri = process.env.MONGO_URI;
+const tokenSecret = process.env.TOKEN_SECRET;
 
 mongoose.connect(mongoUri, {
   useNewUrlParser: true,
@@ -54,7 +54,7 @@ app.get("/", async (req, res) => {
       res.redirect("/login");
     } else {
       console.log(err);
-      res.redirect("/login");
+      res.status(500).send("An error occurred"); // Send a generic error message
     }
   }
 });
@@ -178,4 +178,4 @@ app.get("*", (req, res) => {
   res.status(404).send("404 Not Found");
 });
 
-app.listen(process.env.PORT || 4000);
+app.listen(4000, () => console.log("Server started on port 3000."));
